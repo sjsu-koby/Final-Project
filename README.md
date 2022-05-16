@@ -11,4 +11,18 @@ Added basic files
 
 Drawing sprites
 
-**Date:**
+**5/09/22 - 5/16/22:**
+
+Made and added sprites
+
+Fixed the HTML
+
+Built a code that the game can slightly run off of  
+
+Trying to functionalize the code, so the player stops falling
+
+**Ongoing:**
+
+Trying to make the game functionalize(Add two end screens afterwards)
+
+Give sprites animation(not that important, but will attempt past due date)
