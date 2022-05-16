@@ -1,20 +1,37 @@
-var stick, platform, ground;
-var platformImg;
+var stick;
+var platform;
+var water;
+var platformImg, stickImg, waterImg;
 var gameOver;
 var gameState = 'title';
 
 var GRAVITY = 1;
 var JUMP = 15
+var GROUND_Y = 450;
+var MIN_OPENING = 300;
+
+function preload() {
+
+  stickImg = loadImage('assets/stick.png');
+  platformImg = loadImage('assets/platform.png');
+  waterImg = loadImage('assets/water.png');
+
+}
 
 function setup() {
 
-  createCanvas(700,900);
-  platformImg = loadImage('assets/platform.png');
-  stick = createSprite(200,200);
-  stick = loadImage('assets/stick.png');
+  createCanvas(700, 900);
+  stick = createSprite(width / 2, height / 1.2, 10, 10);
+  stick.setCollider('circle', 0, 0, 20);
+  stick.addImage(stickImg);
 
-  platform = createSprite(200,300);
-  platform.addImage(platformImg);
+  platform = new Group();
+  water = new Group();
+
+  for (let i = 0; i < 7; i++) {
+		let floor = createSprite(random(0, width), random(0, height));
+		platform.add(floor);
+  }
 }
 
 function draw() {
@@ -31,15 +48,15 @@ function draw() {
       break;
   }
   if (stick.collide(platform)) {
-    dog.velocity.y = 0;
+    stick.velocity.y = 0;
   }
 }
 
 function keyReleased() {
   if (gameState === 'title' || gameState === 'gameover') {
-  if (key === ' ' || key === ' ') {
-    gameState = 'lvl1';
-    background(220);
+    if (key === ' ' || key === ' ') {
+      gameState = 'lvl1';
+      background(220);
     }
   }
 }
@@ -55,14 +72,34 @@ function titleScreen() {
 }
 
 function gameStage1() {
+  if (!gameOver) {
 
+    if (keyWentDown('x'))
+      stick.velocity.y = JUMP;
+
+    stick.velocity.y += GRAVITY;
+
+    if (stick.position.y < 0)
+      stick.position.y = 0;
+
+    if (stick.overlap(water))
+      die();
+
+    drawSprite(stick);
+    drawSprites(platform);
+    drawSprite(water);
+  }
+
+  function keyPressed() {
+    if (keyCode === 32) {
+      if (gameOver)
+        newGame();
+      stick.velocity.y = JUMP;
+    }
+
+  }
 }
 
-function keyPressed() {
-  if (keyCode === 32) {
-    if (gameOver)
-      newGame();
-    stick.velocity.y = JUMP;
-  }
+function gameStart() {
 
 }
