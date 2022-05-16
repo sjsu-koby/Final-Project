@@ -1,20 +1,21 @@
 var stick;
 var platform;
 var water;
-var platformImg, stickImg, waterImg;
+var ground;
+var platformImg, stickImg, waterImg, groundImg;
 var gameOver;
 var gameState = 'title';
 
-var GRAVITY = 1;
+var GRAVITY = 0.5;
 var JUMP = 15
 var GROUND_Y = 450;
 var MIN_OPENING = 300;
 
 function preload() {
-
   stickImg = loadImage('assets/stick.png');
   platformImg = loadImage('assets/platform.png');
   waterImg = loadImage('assets/water.png');
+  ground = loadImage('assets/flappy_ground.png');
 
 }
 
@@ -24,9 +25,17 @@ function setup() {
   stick = createSprite(width / 2, height / 1.2, 10, 10);
   stick.setCollider('circle', 0, 0, 20);
   stick.addImage(stickImg);
+  stick.collide(ground);
+
+  ground = createSprite(windowWidth, windowHeight + 100); //image 800x200
+  ground.addImage(groundImg);
 
   platform = new Group();
   water = new Group();
+  gameOver = true;
+  updateSprites(false);
+
+  camera.position.y = height / 2;
 
   for (let i = 0; i < 7; i++) {
 		let floor = createSprite(random(0, width), random(0, height));
@@ -47,7 +56,7 @@ function draw() {
       gameOver();
       break;
   }
-  if (stick.collide(platform)) {
+  if (stick.collide(ground)) {
     stick.velocity.y = 0;
   }
 }
@@ -82,22 +91,33 @@ function gameStage1() {
     if (stick.position.y < 0)
       stick.position.y = 0;
 
-    if (stick.overlap(water))
+   if (stick.overlap(water))
       die();
 
     drawSprite(stick);
     drawSprites(platform);
-    drawSprite(water);
+    drawSprites(ground);
+
   }
 
   function keyPressed() {
     if (keyCode === 32) {
-      if (gameOver)
+      if (gameOver);
         newGame();
       stick.velocity.y = JUMP;
+    } else if (keyCode === RIGHT_ARROW) { //right
+      (stick, 5, 0);
+    } else if (keyCode === LEFT_ARROW) { //right
+      walk(stick, 5, 180);
     }
 
+
   }
+}
+
+function walk(sprite, speed, dir) {
+  sprite.setSpeed(speed, dir);
+
 }
 
 function gameStart() {
