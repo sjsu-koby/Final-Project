@@ -15,19 +15,20 @@ function preload() {
   stickImg = loadImage('assets/stick.png');
   platformImg = loadImage('assets/platform.png');
   waterImg = loadImage('assets/water.png');
-  ground = loadImage('assets/flappy_ground.png');
+  groundImg = loadImage('assets/flappy_ground.png');
 
 }
 
 function setup() {
 
   createCanvas(700, 900);
+
   stick = createSprite(width / 2, height / 1.2, 10, 10);
   stick.setCollider('circle', 0, 0, 20);
   stick.addImage(stickImg);
   stick.collide(ground);
 
-  ground = createSprite(windowWidth, windowHeight + 100); //image 800x200
+  ground = createSprite(windowWidth, windowHeight + 100);
   ground.addImage(groundImg);
 
   platform = new Group();
@@ -37,10 +38,6 @@ function setup() {
 
   camera.position.y = height / 2;
 
-  for (let i = 0; i < 7; i++) {
-		let floor = createSprite(random(0, width), random(0, height));
-		platform.add(floor);
-  }
 }
 
 function draw() {
@@ -94,25 +91,60 @@ function gameStage1() {
    if (stick.overlap(water))
       die();
 
-    drawSprite(stick);
-    drawSprites(platform);
-    drawSprites(ground);
+      //spawn waters
+      if (frameCount % 90 == 0) {
+        var waterH = (-80);
+        var water = createSprite(stick.position.x + width + random(width), GROUND_Y - waterH / 3 + 1 + 250, 80, waterH);
+        water.addImage(waterImg);
+        waters.add(water);
 
+      }
+
+      //get rid of passed waters
+      for (var i = 0; i < waters.length; i++)
+        if (waters[i].position.x < dog.position.x - width / 2)
+          waters[i].remove();
   }
 
-  function keyPressed() {
-    if (keyCode === 32) {
-      if (gameOver);
-        newGame();
-      stick.velocity.y = JUMP;
-    } else if (keyCode === RIGHT_ARROW) { //right
-      (stick, 5, 0);
-    } else if (keyCode === LEFT_ARROW) { //right
-      walk(stick, 5, 180);
-    }
+  camera.position.x = dog.position.x + width / 4;
+  ground.position.x = dog.position.x + width / 4;
+  background(220);
+  camera.off();
+  camera.on();
+  drawSprite(stick);
+  drawSprites(platform);
+  drawSprites(ground);
 
-
+  for (let i = 0; i < 7; i++) {
+    let floor = createSprite(random(0, width), random(0, height));
+    platform.add(floor);
   }
+
+}
+
+function newGame() {
+  water.removeSprites();
+  gameOver = false;
+  updateSprites(true);
+  stick.position.x = width / 2;
+  stick.position.y = height / 1.3;
+  stick.velocity.y = 2;
+  ground.position.x = windowWidth;
+  ground.position.y = windowHeight - 110;
+}
+
+function keyPressed() {
+  if (keyCode === 32) {
+    if (gameOver);
+      newGame();
+    stick.velocity.y = JUMP;
+  } else if (keyCode === RIGHT_ARROW) { //right
+    (stick, 5, 0);
+  } else if (keyCode === LEFT_ARROW) { //right
+    walk(stick, 5, 180);
+  }
+
+
 }
 
 function walk(sprite, speed, dir) {
