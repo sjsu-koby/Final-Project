@@ -21,8 +21,14 @@ Built a code that the game can slightly run off of
 
 Trying to functionalize the code, so the player stops falling
 
-**Ongoing:**
+**5/17/22 - Present:**
 
-Trying to make the game functionalize(Add two end screens afterwards)
+Made code functional
+
+Attempt to move sprite left to right
+
+Add class for platforms/background
+
+Add a game over screen and artist statement
 
 Give sprites animation(not that important, but will attempt past due date)
