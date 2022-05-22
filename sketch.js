@@ -1,34 +1,44 @@
-var GRAVITY = 0.3;
-var JUMP = -9;
+var GRAVITY = 0.4;
+var JUMP = -11;
 var GROUND_Y = 450;
 var MIN_OPENING = 300;
-var stick, ground;
-var water;
+var stick, ground, water;
 var gameOver;
-var stickImg, waterImg, groundImg, bgImg, bgS;
+var stickImg, waterImg, groundImg;
 var gameState = 'title';
+var floor1;
+var floor2;
+var changeDirection;
 
-
+function preload() {
+  stickLeft = loadAnimation('assets/stick.png');
+  stickRight = loadAnimation('assets/stick.png');
+}
 
 function setup() {
   createCanvas(700, 900);
 
+  // 0.1 is highest
+  floor1 = new Floor(0, height * .24);
+  floor2 = new Floor(150, height * .33);
   stickImg = loadImage('assets/stick.png');
   waterImg = loadImage('assets/water.png');
   groundImg = loadImage('assets/platform.png');
   // bgImg = loadImage('assets/flappy_bg.png');
-  bgS = loadImage('assets/bg_stick.JPG');
 
-  stick = createSprite(width / 2, height / 2.5, 40, 40);
+  stick = createSprite(10, 20);
 
-  stick.velocity.x = 15;
   stick.setCollider('circle', 0, 0, 50);
-  stick.addAnimation('move', 'assets/stick.png');
+  stick.addAnimation('normal', 'assets/stick.png');
 
-  ground = createSprite(360 / 2, GROUND_Y + 300); //image 360x20
+  ground = createSprite(360 / 2, 300); //image 360x20
   ground.addImage(groundImg);
 
-  waters = new Group();
+  water = createSprite(0, 1200);
+  water.addImage(waterImg);
+
+  //floor1 = createSprite(floor1);
+  Floor = new Group();
   gameOver = true;
   updateSprites(false);
 
@@ -47,7 +57,9 @@ function draw() {
       youDied();
       break;
   }
-  if (stick.collide(ground)) {
+  //stick.collide(ground);
+  //stick.collide(floor1);
+  if (stick.collide(ground, Floor)) {
     stick.velocity.y = 0;
   }
 }
@@ -72,6 +84,9 @@ function titleScreen() {
 
 function gameStage1() {
 
+  stick.velocity.x = 0;
+  if (keyIsDown(LEFT_ARROW)) stick.velocity.x = -5;
+  if (keyIsDown(RIGHT_ARROW)) stick.velocity.x = 5;
   if (gameOver && keyWentDown(' '))
     newGame();
 
@@ -79,57 +94,60 @@ function gameStage1() {
 
     if (keyWentDown(' '))
       stick.velocity.y = JUMP;
-
     stick.velocity.y += GRAVITY;
 
     if (stick.position.y < 0)
       stick.position.y = 0;
 
-    if (stick.overlap(waters))
+    if (stick.overlap(water))
       die();
 
     //spawn waters
-    if (frameCount % 60 == 0) {
-      var waterH = (0);
-      var water = createSprite(stick.position.x + width, GROUND_Y + 800, 80, waterH);
-      water.addImage(waterImg);
-      waters.add(water);
+    //if (frameCount % 45 == 0) {
+    //  var waterH = (0);
+      //var water = createSprite(ground.position.x + width, GROUND_Y + 800, 80, waterH);
+      //water.addImage(waterImg);
+      //waters.add(water);
 
-    }
+    //}
 
     //get rid of passed waters
-    for (var i = 0; i < waters.length; i++)
-      if (waters[i].position.y < stick.position.y - width / 2){
-        waters[i].remove();
-      }
+    //for (var i = 0; i < waters.length; i++)
+      //if (waters[i].position.y < height / 2.5 - width / 2) {
+      //  waters[i].remove();
+      //}
   }
-
-  camera.position.x = stick.position.x + width / 25;
-  ground.position.x = stick.position.x;
+  //camera.position.x = stick.position.x + width / 25;
+  //ground.position.x = width / 2;
   //wrap ground
   // if(camera.position.x > ground.position.x)
   // ground.position.x+=ground.width;
 
-  background(0, 204, 255);
   camera.off();
   background(220);
+  textSize(20);
+  fill(0);
+  textAlign(CENTER);
+  text('Reach the Top to Win!', width * .5, height * .04);
+  floor1.display();
+  floor2.display();
+  floor1.move();
+  floor2.move();
   camera.on();
 
-  drawSprite(ground);
-  drawSprites(waters);
-  drawSprite(stick);
+  drawSprites();
 }
 
 
 function newGame() {
-  waters.removeSprites();
+  // waters.removeSprites();
   gameOver = false;
   updateSprites(true);
-  stick.position.x = width / 2;
-  stick.position.y = height / 1.3;
+  stick.position.x = 20;
+  stick.position.y = 590;
   stick.velocity.y = 2;
-  ground.position.x = 360 / 2;
-  ground.position.y = GROUND_Y + 300;
+  ground.position.x = 10;
+  ground.position.y = 600;
 }
 
 function die() {
@@ -141,33 +159,22 @@ function die() {
   }
 }
 
-function youDied(){
+function youDied() {
 
-    background(220);
-    textSize(70);
-    textAlign(CENTER);
-    text('Game Over', width * .01, height * .25);
-    textSize(30);
-    fill(100);
-    text('(Press "SPACE" To Try Again)', width * .01, height * .30);
+  background(220);
+  textSize(70);
+  textAlign(CENTER);
+  text('Game Over', width * .01, height * .4);
+  textSize(30);
+  fill(100);
+  text('(Press "SPACE" To Try Again)', width * .01, height * .5);
 }
 
 function keyPressed() {
   if (keyCode === 32) {
     if (gameOver) newGame();
     stick.velocity.y = JUMP;
-    //stick.changeAnimation("jump");
-  } else if (keyCode === RIGHT_ARROW) { //right
-    walk(stick, 5, 0);
-  } else if (keyCode === LEFT_ARROW) { //left
-    walk(stick, 5, 180);
   }
-
-}
-
-function walk(sprite, speed, dir) {
-  sprite.setSpeed(speed, dir);
-
 }
 
 function gameStart() {

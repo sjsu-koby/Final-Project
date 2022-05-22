@@ -29,10 +29,12 @@ Made game over water
 
 Added initial platform and fixed hitboxes
 
-Attempt to move sprite left to right
+Added sprite movement(left and right arrow keys)
 
-Add class for platforms/background
+Added class for platforms
 
-Add a game over screen and artist statement
+Added a game over screen
+
+Add a victory screen and artist statement
 
 Give sprites animation(not that important, but will attempt past due date)
