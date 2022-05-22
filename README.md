@@ -25,6 +25,10 @@ Trying to functionalize the code, so the player stops falling
 
 Made code functional
 
+Made game over water
+
+Added initial platform and fixed hitboxes
+
 Attempt to move sprite left to right
 
 Add class for platforms/background
