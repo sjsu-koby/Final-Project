@@ -21,13 +21,15 @@ Built a code that the game can slightly run off of
 
 Trying to functionalize the code, so the player stops falling
 
-**5/17/22 - Present:**
+**5/17/22 - 5/20/22:**
 
 Made code functional
 
 Made game over water
 
 Added initial platform and fixed hitboxes
+
+**5/21/22 - 5/22/22:**
 
 Added sprite movement(left and right arrow keys)
 
