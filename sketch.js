@@ -29,10 +29,11 @@ function setup() {
 
   stick = createSprite(10, 679);
   stick.velocity.x = 0;
-  stick.setCollider('circle', 0, 0, 50);
+  stick.setCollider('rectangle', 0, 0, 40, 110);
   stick.addImage(stickImg);
 
   ground = createSprite(10, 680); //image 360x20
+  ground.setCollider('rectangle', 0, 0, 120, 21);
   ground.addImage(groundImg);
 
   water = createSprite(0, 1200);
@@ -60,7 +61,7 @@ function draw() {
   }
   //stick.collide(ground);
   //stick.collide(floor1);
-  if (stick.collide(ground, floor1, floor2, Floor)) {
+  if (stick.collide(ground, Floor)) {
     stick.velocity.y = 0;
   }
 }
@@ -104,6 +105,7 @@ function gameStage1() {
 
     if (stick.position.y < 0)
       stick.position.y = 0;
+
 
     if (stick.overlap(water))
       die();
@@ -157,9 +159,7 @@ function newGame() {
 function die() {
 
   if (gameState === 'lvl1' || gameState === 'title') {
-    if (key === ' ' || key === ' ') {
       gameState = 'gameover';
-    }
   }
 }
 
