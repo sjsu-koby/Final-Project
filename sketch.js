@@ -15,17 +15,17 @@ function setup() {
 
   stickImg = loadImage('assets/stick.png');
   waterImg = loadImage('assets/water.png');
-  groundImg = loadImage('assets/flappy_ground.png');
+  groundImg = loadImage('assets/platform.png');
   // bgImg = loadImage('assets/flappy_bg.png');
   bgS = loadImage('assets/bg_stick.JPG');
 
   stick = createSprite(width / 2, height / 2.5, 40, 40);
 
   stick.velocity.x = 15;
-  stick.setCollider('circle', 0, 0, 20);
+  stick.setCollider('circle', 0, 0, 50);
   stick.addAnimation('move', 'assets/stick.png');
 
-  ground = createSprite(windowWidth, windowHeight + 100); //image 800x200
+  ground = createSprite(360 / 2, GROUND_Y + 300); //image 360x20
   ground.addImage(groundImg);
 
   waters = new Group();
@@ -64,10 +64,10 @@ function titleScreen() {
   background(220);
   textSize(70);
   textAlign(CENTER);
-  text('The Water is Lava', width * .01, height * .25);
+  text('The Water is Lava', width * .01, height * .4);
   textSize(30);
   fill(100);
-  text('(Press "SPACE" To Play)', width * .01, height * .30);
+  text('(Press "SPACE" To Play)', width * .01, height * .5);
 }
 
 function gameStage1() {
@@ -89,9 +89,9 @@ function gameStage1() {
       die();
 
     //spawn waters
-    if (frameCount % 100 == 0) {
-      var waterH = (-1200);
-      var water = createSprite(stick.position.y + height + random(height), GROUND_Y + 250, 80);
+    if (frameCount % 60 == 0) {
+      var waterH = (0);
+      var water = createSprite(stick.position.x + width, GROUND_Y + 800, 80, waterH);
       water.addImage(waterImg);
       waters.add(water);
 
@@ -99,12 +99,13 @@ function gameStage1() {
 
     //get rid of passed waters
     for (var i = 0; i < waters.length; i++)
-      if (waters[i].position.y < stick.position.y - width / 2)
+      if (waters[i].position.y < stick.position.y - width / 2){
         waters[i].remove();
+      }
   }
 
-  camera.position.x = stick.position.x + width / 50;
-  ground.position.x = stick.position.x + width / 4;
+  camera.position.x = stick.position.x + width / 25;
+  ground.position.x = stick.position.x;
   //wrap ground
   // if(camera.position.x > ground.position.x)
   // ground.position.x+=ground.width;
@@ -127,8 +128,8 @@ function newGame() {
   stick.position.x = width / 2;
   stick.position.y = height / 1.3;
   stick.velocity.y = 2;
-  ground.position.x = windowWidth;
-  ground.position.y = windowHeight - 110;
+  ground.position.x = 360 / 2;
+  ground.position.y = GROUND_Y + 300;
 }
 
 function die() {
