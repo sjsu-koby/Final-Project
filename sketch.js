@@ -29,7 +29,7 @@ function setup() {
 
   stick = createSprite(10, 679);
   stick.velocity.x = 0;
-  stick.setCollider('rectangle', 0, 0, 40, 110);
+  stick.setCollider('rectangle', 0, 0, 40, 80);
   stick.addImage(stickImg);
 
   ground = createSprite(10, 680); //image 360x20
