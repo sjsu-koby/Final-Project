@@ -8,6 +8,7 @@ var stickImg, waterImg, groundImg;
 var gameState = 'title';
 var floor1;
 var floor2;
+var floor3;
 var changeDirection;
 
 function preload() {
@@ -19,19 +20,19 @@ function setup() {
   createCanvas(700, 900);
 
   // 0.1 is highest
-  floor1 = new Floor(0, height * .24);
-  floor2 = new Floor(150, height * .33);
+  floor1 = new Floor(0, height * .30);
+  floor2 = new Floor(150, height * .25);
+  floor3 = new Floor(100, height * .1);
   stickImg = loadImage('assets/stick.png');
   waterImg = loadImage('assets/water.png');
   groundImg = loadImage('assets/platform.png');
-  // bgImg = loadImage('assets/flappy_bg.png');
 
-  stick = createSprite(10, 20);
-
+  stick = createSprite(10, 679);
+  stick.velocity.x = 0;
   stick.setCollider('circle', 0, 0, 50);
-  stick.addAnimation('normal', 'assets/stick.png');
+  stick.addImage(stickImg);
 
-  ground = createSprite(360 / 2, 300); //image 360x20
+  ground = createSprite(10, 680); //image 360x20
   ground.addImage(groundImg);
 
   water = createSprite(0, 1200);
@@ -59,7 +60,7 @@ function draw() {
   }
   //stick.collide(ground);
   //stick.collide(floor1);
-  if (stick.collide(ground, Floor)) {
+  if (stick.collide(ground, floor1, floor2, Floor)) {
     stick.velocity.y = 0;
   }
 }
@@ -80,6 +81,11 @@ function titleScreen() {
   textSize(30);
   fill(100);
   text('(Press "SPACE" To Play)', width * .01, height * .5);
+  textSize(20);
+  fill(0);
+  text('Reach the Top to Win!', width * .01, height * .65);
+  fill(100);
+  text('Controls: "SPACE" to jump. "LEFT/RIGHT ARROWKEYS" to move.', width * .01, height * .7)
 }
 
 function gameStage1() {
@@ -124,15 +130,13 @@ function gameStage1() {
   // ground.position.x+=ground.width;
 
   camera.off();
-  background(220);
-  textSize(20);
-  fill(0);
-  textAlign(CENTER);
-  text('Reach the Top to Win!', width * .5, height * .04);
+  background(220);;
   floor1.display();
   floor2.display();
+  floor3.display();
   floor1.move();
   floor2.move();
+  floor3.move();
   camera.on();
 
   drawSprites();
@@ -143,11 +147,11 @@ function newGame() {
   // waters.removeSprites();
   gameOver = false;
   updateSprites(true);
-  stick.position.x = 20;
-  stick.position.y = 590;
-  stick.velocity.y = 2;
+  stick.position.x = 10;
+  stick.position.y = 679;
+  stick.velocity.y = 0;
   ground.position.x = 10;
-  ground.position.y = 600;
+  ground.position.y = 680;
 }
 
 function die() {
