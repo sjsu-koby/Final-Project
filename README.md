@@ -41,6 +41,8 @@ Added music and jump sound effects
 
 **Ongoing:**
 
+Make platform collision
+
 Make the victory screen start a new game
 
 Give sprites animation(not that important, but will attempt past due date)
