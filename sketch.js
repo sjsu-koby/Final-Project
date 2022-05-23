@@ -120,27 +120,6 @@ function gameStage1() {
     if (stick.overlap(water))
       die();
 
-    //spawn waters
-    //if (frameCount % 45 == 0) {
-    //  var waterH = (0);
-    //var water = createSprite(ground.position.x + width, GROUND_Y + 800, 80, waterH);
-    //water.addImage(waterImg);
-    //waters.add(water);
-
-    //}
-
-    //get rid of passed waters
-    //for (var i = 0; i < waters.length; i++)
-    //if (waters[i].position.y < height / 2.5 - width / 2) {
-    //  waters[i].remove();
-    //}
-  }
-  //camera.position.x = stick.position.x + width / 25;
-  //ground.position.x = width / 2;
-  //wrap ground
-  // if(camera.position.x > ground.position.x)
-  // ground.position.x+=ground.width;
-
   camera.off();
   background(220);;
   floor1.display();
