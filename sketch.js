@@ -10,15 +10,22 @@ var floor1;
 var floor2;
 var floor3;
 var changeDirection;
+var jumpSound;
+var music;
+var slider;
 
 function preload() {
+  music = loadSound('assets/beach-time.mp3')
+  jumpSound = loadSound('assets/Mario-jump-sound.mp3')
   stickLeft = loadAnimation('assets/stick.png');
   stickRight = loadAnimation('assets/stick.png');
 }
 
 function setup() {
   createCanvas(700, 900);
-
+  music.play();
+  slider = createSlider(0,1,0.5,0.01);
+  slider.position(CENTER, height * 0.01);
   // 0.1 is highest
   floor1 = new Floor(0, height * .30);
   floor2 = new Floor(150, height * .25);
@@ -48,6 +55,7 @@ function setup() {
 }
 
 function draw() {
+    music.setVolume(slider.value());
   switch (gameState) {
     case 'title':
       titleScreen();
@@ -176,6 +184,8 @@ function youDied() {
 
 function keyPressed() {
   if (keyCode === 32) {
+      jumpSound.play();
+      jumpSound.setVolume(0.1);
     if (gameOver) newGame();
     stick.velocity.y = JUMP;
   }
