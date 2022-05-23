@@ -2,9 +2,9 @@ var GRAVITY = 0.4;
 var JUMP = -11;
 var GROUND_Y = 450;
 var MIN_OPENING = 300;
-var stick, ground, water;
+var stick, ground, ground1, water;
 var gameOver;
-var stickImg, waterImg, groundImg;
+var stickImg, waterImg, groundImg, ground1Img;
 var gameState = 'title';
 var floor1;
 var floor2;
@@ -33,6 +33,7 @@ function setup() {
   stickImg = loadImage('assets/stick.png');
   waterImg = loadImage('assets/water.png');
   groundImg = loadImage('assets/platform.png');
+  ground1Img = loadImage('assets/platform.png');
 
   stick = createSprite(10, 675);
   stick.velocity.x = 0;
@@ -42,6 +43,10 @@ function setup() {
   ground = createSprite(10, 680); //image 360x20
   ground.setCollider('rectangle', 0, 0, 120, 21);
   ground.addImage(groundImg);
+
+  ground1 = createSprite(10, 80); //image 360x20
+  ground1.setCollider('rectangle', 0, 0, 120, 21);
+  ground1.addImage(groundImg);
 
   water = createSprite(0, 1200);
   water.addImage(waterImg);
@@ -65,6 +70,9 @@ function draw() {
       break;
     case 'gameover':
       youDied();
+      break;
+    case 'win':
+      victory();
       break;
   }
   //stick.collide(ground);
@@ -120,6 +128,10 @@ function gameStage1() {
     if (stick.overlap(water))
       die();
 
+    if (stick.overlap(ground1))
+      win();
+  }
+
   camera.off();
   background(220);;
   floor1.display();
@@ -135,7 +147,7 @@ function gameStage1() {
 
 
 function newGame() {
-  // waters.removeSprites();
+
   gameOver = false;
   updateSprites(true);
   stick.position.x = 10;
@@ -164,15 +176,35 @@ function youDied() {
   text('(Press "SPACE" To Try Again)', width * .01, height * .5);
 }
 
-function keyPressed() {
-  if (keyCode === 32) {
-    jumpSound.play();
-    jumpSound.setVolume(0.1);
-    if (gameOver) newGame();
-    stick.velocity.y += JUMP;
+function win() {
+
+  if (gameState === 'lvl1' || gameState === 'title') {
+    gameState = 'win';
+
   }
 }
 
-function gameStart() {
+  function victory() {
+    gameOver = true;
+    updateSprites(false);
+    background(220);
+    textSize(70);
+    textAlign(CENTER);
+    text('You Survived!', width * .01, height * .4);
+    textSize(30);
+    fill(100);
+    text('(Press "SPACE" To Play Again)', width * .01, height * .5);
+  }
 
-}
+  function keyPressed() {
+    if (keyCode === 32) {
+      jumpSound.play();
+      jumpSound.setVolume(0.1);
+      if (gameOver) newGame();
+      stick.velocity.y += JUMP;
+    }
+  }
+
+  function gameStart() {
+
+  }
