@@ -24,7 +24,7 @@ function preload() {
 function setup() {
   createCanvas(700, 900);
   music.loop();
-  slider = createSlider(0,1,0.5,0.01);
+  slider = createSlider(0, 1, 0.5, 0.01);
   slider.position(CENTER, height * 0.01);
   // 0.1 is highest
   floor1 = new Floor(0, height * .30);
@@ -34,7 +34,7 @@ function setup() {
   waterImg = loadImage('assets/water.png');
   groundImg = loadImage('assets/platform.png');
 
-  stick = createSprite(10, 679);
+  stick = createSprite(10, 675);
   stick.velocity.x = 0;
   stick.setCollider('rectangle', 0, 0, 40, 80);
   stick.addImage(stickImg);
@@ -55,7 +55,7 @@ function setup() {
 }
 
 function draw() {
-    music.setVolume(slider.value());
+  music.setVolume(slider.value());
   switch (gameState) {
     case 'title':
       titleScreen();
@@ -123,17 +123,17 @@ function gameStage1() {
     //spawn waters
     //if (frameCount % 45 == 0) {
     //  var waterH = (0);
-      //var water = createSprite(ground.position.x + width, GROUND_Y + 800, 80, waterH);
-      //water.addImage(waterImg);
-      //waters.add(water);
+    //var water = createSprite(ground.position.x + width, GROUND_Y + 800, 80, waterH);
+    //water.addImage(waterImg);
+    //waters.add(water);
 
     //}
 
     //get rid of passed waters
     //for (var i = 0; i < waters.length; i++)
-      //if (waters[i].position.y < height / 2.5 - width / 2) {
-      //  waters[i].remove();
-      //}
+    //if (waters[i].position.y < height / 2.5 - width / 2) {
+    //  waters[i].remove();
+    //}
   }
   //camera.position.x = stick.position.x + width / 25;
   //ground.position.x = width / 2;
@@ -160,7 +160,7 @@ function newGame() {
   gameOver = false;
   updateSprites(true);
   stick.position.x = 10;
-  stick.position.y = 679;
+  stick.position.y = 675;
   stick.velocity.y = 0;
   ground.position.x = 10;
   ground.position.y = 680;
@@ -169,12 +169,13 @@ function newGame() {
 function die() {
 
   if (gameState === 'lvl1' || gameState === 'title') {
-      gameState = 'gameover';
+    gameState = 'gameover';
   }
 }
 
 function youDied() {
-
+  gameOver = true;
+  updateSprites(false);
   background(220);
   textSize(70);
   textAlign(CENTER);
@@ -186,10 +187,10 @@ function youDied() {
 
 function keyPressed() {
   if (keyCode === 32) {
-      jumpSound.play();
-      jumpSound.setVolume(0.1);
+    jumpSound.play();
+    jumpSound.setVolume(0.1);
     if (gameOver) newGame();
-    stick.velocity.y = JUMP;
+    stick.velocity.y += JUMP;
   }
 }
 
