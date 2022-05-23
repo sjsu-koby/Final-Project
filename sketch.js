@@ -23,7 +23,7 @@ function preload() {
 
 function setup() {
   createCanvas(700, 900);
-  music.play();
+  music.loop();
   slider = createSlider(0,1,0.5,0.01);
   slider.position(CENTER, height * 0.01);
   // 0.1 is highest
@@ -89,12 +89,14 @@ function titleScreen() {
   text('The Water is Lava', width * .01, height * .4);
   textSize(30);
   fill(100);
-  text('(Press "SPACE" To Play)', width * .01, height * .5);
-  textSize(20);
+  text('(Press "SPACE" to start)', width * .01, height * .5);
+  textSize(40);
   fill(0);
-  text('Reach the Top to Win!', width * .01, height * .65);
+  text('How to Play', width * .01, height * .65);
+  textSize(20);
   fill(100);
-  text('Controls: "SPACE" to jump. "LEFT/RIGHT ARROWKEYS" to move.', width * .01, height * .7)
+  text('Reach the top to win!', width * .01, height * .7)
+  text('Controls: "SPACE" to jump. "LEFT/RIGHT ARROWKEYS" to move.', width * .01, height * .75)
 }
 
 function gameStage1() {
