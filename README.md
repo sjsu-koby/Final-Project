@@ -35,8 +35,14 @@ Added sprite movement(left and right arrow keys)
 
 Added class for platforms
 
-Added a game over screen
+Added a game over and victory screen
 
-Add a victory screen and artist statement
+Added music and jump sound effects
+
+**Ongoing:**
+
+Make the victory screen start a new game
 
 Give sprites animation(not that important, but will attempt past due date)
+
+Add an artist statement
