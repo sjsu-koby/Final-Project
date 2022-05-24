@@ -2,17 +2,21 @@ var GRAVITY = 0.4;
 var JUMP = -12;
 var GROUND_Y = 450;
 var MIN_OPENING = 300;
-var stick, ground, ground1, water, platforms, x;
+var stick, ground, ground1, water, platform, x;
 var gameOver;
-var stickImg, waterImg, groundImg, ground1Img, birdImg;
-var platform1, platform2, platform3;
+var stickImg, waterImg, groundImg, ground1Img, birdImg, platformImg;
 var gameState = 'title';
 var birds = [];
 var changeDirection;
 var jumpSound;
 var music;
 var slider;
-var platform = [];
+var rect1X = 600;
+var rect1Y = 300;
+var rect1Width = 100;
+var rect1Height = 100;
+var move = 5;
+
 function preload() {
   music = loadSound('assets/beach-time.mp3')
   jumpSound = loadSound('assets/Mario-jump-sound.mp3')
@@ -53,19 +57,6 @@ function setup() {
   ground.setCollider('rectangle', 0, 0, 120, 21);
   ground.addImage(groundImg);
 
-  platform1 = createSprite(random(1,100), 540);
-  platform1.setCollider('rectangle', 0, 0, 120, 21);
-  platform1.addImage(groundImg);
-
-  platform2 = createSprite(random(100,200), 400);
-  platform2.setCollider('rectangle', 0, 0, 120, 21);
-  platform2.addImage(groundImg);
-
-  platform3 = createSprite(random(200,300), 250);
-  platform3.setCollider('rectangle', 0, 0, 120, 21);
-  platform3.addImage(groundImg);
-
-
   ground1 = createSprite(350, 80); //image 360x20
   ground1.setCollider('rectangle', 0, 0, 120, 21);
   ground1.addImage(groundImg);
@@ -73,7 +64,8 @@ function setup() {
   water = createSprite(0, 1200);
   water.addAnimation('wave', 'assets/water1.png', 'assets/water2.png');
 
-  Bird = new Group
+  platforms = new Group();
+  Bird = new Group();
   gameOver = true;
   updateSprites(false);
 
@@ -103,18 +95,10 @@ function draw() {
   if (stick.collide(ground)) {
     stick.velocity.y = 0;
   }
-  if (stick.collide(platform1)) {
-   stick.velocity.y = 0;
-
+  if(stick.collide(platforms)) {
+    stick.velocity.y = 0;
   }
-  if (stick.collide(platform2)) {
-   stick.velocity.y = 0;
 
-  }
-  if (stick.collide(platform3)) {
-   stick.velocity.y = 0;
-
-  }
 }
 
 function keyReleased() {
@@ -144,37 +128,7 @@ function titleScreen() {
 }
 
 function gameStage1() {
-  //console.log('Cursor at: '+mouseX+', '+mouseY);
-  push();
-  if(platform1.position.x > width){
-		changeDirection=true}
-	else if (platform1.position.x <= 0){
-		changeDirection = false}
-	if (platform1.position.x >= 0 && changeDirection == false){
-		platform1.position.x = platform1.position.x + 1}
-	else if(changeDirection == true){
-		platform1.position.x = platform1.position.x - 1}
-  pop();
-  push();
-  if(platform2.position.x > width){
-    changeDirection=true}
-  else if (platform2.position.x <= 0){
-    changeDirection = false}
-  if (platform2.position.x >= 0 && changeDirection == false){
-    platform2.position.x = platform2.position.x + 1}
-  else if(changeDirection == true){
-    platform2.position.x = platform2.position.x - 1}
-  pop();
-  push();
-  if(platform3.position.x > width){
-    changeDirection=true}
-  else if (platform3.position.x <= 0){
-    changeDirection = false}
-  if (platform3.position.x >= 0 && changeDirection == false){
-    platform3.position.x = platform3.position.x + 1}
-  else if(changeDirection == true){
-    platform3.position.x = platform3.position.x - 1}
-  pop();
+
 
   stick.velocity.x = 0;
   if (keyIsDown(LEFT_ARROW)) stick.velocity.x = -5;
@@ -198,6 +152,35 @@ function gameStage1() {
 
     if (stick.overlap(ground1))
       win();
+      //spawn platform1
+      if (frameCount % 90 == 0) {
+        var platform = createSprite(- 100, 500);
+        platform.setCollider('rectangle', 0, 0, 120, 21);
+        platform.addImage(platformImg);
+        platforms.add(platform);
+        platform.velocity.x = 5;
+        }
+        //platform2
+        if (frameCount % 90 == 0) {
+          var platform = createSprite(0, 300);
+          platform.setCollider('rectangle', 0, 0, 120, 21);
+          platform.addImage(platformImg);
+          platforms.add(platform);
+          platform.velocity.x = 5;
+        }
+        //platform3
+        if (frameCount % 220 == 0) {
+          var platform = createSprite(-300, 200);
+          platform.setCollider('rectangle', 0, 0, 120, 21);
+          platform.addImage(platformImg);
+          platforms.add(platform);
+          platform.velocity.x = 5;
+        }
+      //get rid of passed platforms
+      for (var i = 0; i < platforms.length; i++) {
+        if (platforms[i].position.x < stick.position.x - width)
+          platforms[i].remove();
+      }
   }
 
   // camera.off();
@@ -209,13 +192,16 @@ function gameStage1() {
 }
 
   //camera.on();
-
-  drawSprites();
+  drawSprite(ground1);
+  drawSprite(ground);
+  drawSprites(platforms);
+  drawSprite(stick);
+  drawSprite(water);
 }
 
 
 function newGame() {
-
+  platforms.removeSprites();
   gameOver = false;
   updateSprites(true);
   stick.position.x = 350;

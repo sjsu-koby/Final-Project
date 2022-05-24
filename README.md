@@ -47,8 +47,10 @@ Made platform collision
 
 Made the victory screen able to start a new game
 
-**Ongoing:**
+**5/24/22:**
 
-Make new platform interactions
+Made new platform function
+
+**Ongoing:**
 
 Give sprites animation(not that important, but will attempt past due date)
