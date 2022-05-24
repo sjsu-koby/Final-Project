@@ -2,9 +2,9 @@ var GRAVITY = 0.4;
 var JUMP = -12;
 var GROUND_Y = 450;
 var MIN_OPENING = 300;
-var stick, ground, ground1, water, platform, x;
+var stick, ground, ground1, water, platform, x, victoryBall;
 var gameOver;
-var stickImg, waterImg, groundImg, ground1Img, birdImg, platformImg;
+var stickImg, waterImg, groundImg, ground1Img, platformImg, victoryImg;
 var gameState = 'title';
 var birds = [];
 var changeDirection;
@@ -18,6 +18,7 @@ function preload() {
   stickLeft = loadAnimation('assets/stick.png');
   stickRight = loadAnimation('assets/stick.png');
   platformImg = loadImage('assets/platform.png');
+  victoryImg = loadImage('assets/victoryball.png');
 }
 
 function setup() {
@@ -48,13 +49,17 @@ function setup() {
   stick.setCollider('rectangle', 0, 0, 40, 80);
   stick.addImage(stickImg);
 
-  ground = createSprite(350, 680); //image 360x20
+  ground = createSprite(350, 680);
   ground.setCollider('rectangle', 0, 0, 120, 21);
   ground.addImage(groundImg);
 
-  ground1 = createSprite(350, 80); //image 360x20
+  ground1 = createSprite(350, 80);
   ground1.setCollider('rectangle', 0, 0, 120, 21);
   ground1.addImage(groundImg);
+
+  victoryBall = createSprite(350, 40);
+  victoryBall.setCollider('circle', 0, 0, 20);
+  victoryBall.addImage(victoryImg);
 
   water = createSprite(0, 1200);
   water.addAnimation('wave', 'assets/water1.png', 'assets/water2.png');
@@ -92,6 +97,9 @@ function draw() {
   }
 
   if (stick.collide(ground)) {
+    stick.velocity.y = 0;
+  }
+  if (stick.collide(ground1)) {
     stick.velocity.y = 0;
   }
   if(stick.collide(platforms)) {
@@ -153,7 +161,7 @@ function gameStage1() {
     if (stick.overlap(water))
       die();
 
-    if (stick.overlap(ground1))
+    if (stick.overlap(victoryBall))
       win();
       //spawn platform1
       if (frameCount % 90 == 60) {
@@ -200,6 +208,7 @@ function gameStage1() {
   drawSprites(platforms);
   drawSprite(stick);
   drawSprite(water);
+  drawSprite(victoryBall);
 }
 
 
