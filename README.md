@@ -41,14 +41,14 @@ Added music and jump sound effects
 
 **5/23/22:**
 
-Added HTML/CSS web pages
+Added HTML/CSS web pages for artist statement and resources
 
 Made platform collision
 
 **Ongoing:**
 
+Make new platform interactions
+
 Make the victory screen start a new game
 
 Give sprites animation(not that important, but will attempt past due date)
-
-Add an artist statement
