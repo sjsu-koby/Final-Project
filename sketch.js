@@ -11,11 +11,6 @@ var changeDirection;
 var jumpSound;
 var music;
 var slider;
-var rect1X = 600;
-var rect1Y = 300;
-var rect1Width = 100;
-var rect1Height = 100;
-var move = 5;
 
 function preload() {
   music = loadSound('assets/beach-time.mp3')
@@ -89,8 +84,12 @@ function draw() {
       victory();
       break;
   }
-  //stick.collide(ground);
-  //stick.collide(bird1);
+  if(stick.position.x < 0){
+    stick.position.x = stick.position.x + 5
+  }
+  if(stick.position.x > 700){
+    stick.position.x = stick.position.x - 5
+  }
 
   if (stick.collide(ground)) {
     stick.velocity.y = 0;
@@ -138,7 +137,6 @@ function gameStage1() {
     newGame();
 
   if (!gameOver) {
-
     if (keyWentDown(' '))
       stick.velocity.y = JUMP;
     stick.velocity.y += GRAVITY;
@@ -146,6 +144,11 @@ function gameStage1() {
     if (stick.position.y < 0)
       stick.position.y = 0;
 
+    if (stick.position.x < -5)
+      die();
+
+    if (stick.position.x > 705)
+      die();
 
     if (stick.overlap(water))
       die();
@@ -153,7 +156,7 @@ function gameStage1() {
     if (stick.overlap(ground1))
       win();
       //spawn platform1
-      if (frameCount % 90 == 0) {
+      if (frameCount % 90 == 60) {
         var platform = createSprite(- 100, 500);
         platform.setCollider('rectangle', 0, 0, 120, 21);
         platform.addImage(platformImg);
@@ -161,15 +164,15 @@ function gameStage1() {
         platform.velocity.x = 5;
         }
         //platform2
-        if (frameCount % 90 == 0) {
-          var platform = createSprite(0, 300);
+        if (frameCount % 90 == 30) {
+          var platform = createSprite(0, 350);
           platform.setCollider('rectangle', 0, 0, 120, 21);
           platform.addImage(platformImg);
           platforms.add(platform);
           platform.velocity.x = 5;
         }
         //platform3
-        if (frameCount % 220 == 0) {
+        if (frameCount % 90 == 0) {
           var platform = createSprite(-300, 200);
           platform.setCollider('rectangle', 0, 0, 120, 21);
           platform.addImage(platformImg);
@@ -249,7 +252,7 @@ function victory() {
     text('You Survived!', width * .5, height * .4);
     textSize(30);
     fill(100);
-    text('(Press "SPACE" To Play Again)', width * .5, height * .5);
+    text('(Press "Any Key" To Play Again)', width * .5, height * .5);
 }
 function keyPressed() {
     if (keyCode === 32) {
