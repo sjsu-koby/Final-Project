@@ -32,7 +32,7 @@ class Bird {
 //  }
   display() {
     fill(0);
-    triangle(this.x, this.y, this.x + 2, this.y + 8, this.x + 5, this.y - 10)
+    triangle(this.x, this.y, this.x + 2, this.y + 12, this.x + 5, this.y - 12)
     ellipse(this.x, this.y, 12, 3)
   }
 

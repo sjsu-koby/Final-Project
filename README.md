@@ -33,15 +33,19 @@ Added initial platform and fixed hitboxes
 
 Added sprite movement(left and right arrow keys)
 
-Added class for platforms
+Added class for background birds
 
 Added a game over and victory screen
 
 Added music and jump sound effects
 
-**Ongoing:**
+**5/23/22:**
 
-Make platform collision
+Added HTML/CSS web pages
+
+Made platform collision
+
+**Ongoing:**
 
 Make the victory screen start a new game
 

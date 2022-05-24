@@ -105,12 +105,15 @@ function draw() {
   }
   if (stick.collide(platform1)) {
    stick.velocity.y = 0;
+
   }
   if (stick.collide(platform2)) {
    stick.velocity.y = 0;
+
   }
   if (stick.collide(platform3)) {
    stick.velocity.y = 0;
+
   }
 }
 
