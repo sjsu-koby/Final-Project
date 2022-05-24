@@ -23,8 +23,9 @@ function preload() {
 
 function setup() {
   createCanvas(700, 900);
-  frameRate(30);
+  frameRate(60);
   music.loop();
+  textFont('Macondo')
   changeDirection = false;
   for (let i = 0; i <= 5; i++) {
    birds[i] = new Bird(

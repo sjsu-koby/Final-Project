@@ -1,9 +1,7 @@
-html, body {
-  height: 100%;
-}
+@import url('https://fonts.googleapis.com/css2?family=Macondo&display=swap');
 
 body {
-  margin: 0;
+
   display: flex;
 
   /* This centers our sketch horizontally. */
@@ -12,6 +10,32 @@ body {
   /* This centers our sketch vertically. */
   align-items: center;
 }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Macondo";
+  height: 100%;
+  font-size: 25px
+}
+
 canvas {
   display: block;
+}
+
+.artistButton {
+  position: fixed;
+  left: 430px;
+
+}
+
+.resourceButton {
+  position: fixed;
+  right: 450px;
+
+}
+
+.artist {
+  margin-left: 0;
+  text-align: center;
 }
