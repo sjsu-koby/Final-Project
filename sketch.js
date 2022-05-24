@@ -189,7 +189,7 @@ function gameStage1() {
         }
       //get rid of passed platforms
       for (var i = 0; i < platforms.length; i++) {
-        if (platforms[i].position.x < stick.position.x - width)
+        if (platforms[i].position.x > stick.position.x + width)
           platforms[i].remove();
       }
   }
