@@ -264,8 +264,7 @@ function victory() {
     textSize(30);
     fill(100);
     text('(Press "SPACE" To Play Again)', width * .5, height * .5);
-  }
-
+}
 function keyPressed() {
     if (keyCode === 32) {
       jumpSound.play();
@@ -273,6 +272,9 @@ function keyPressed() {
       if (gameOver) newGame();
       stick.velocity.y += JUMP;
     }
+    if (gameState === 'win' || gameState === 'win') {
+      gameState = 'lvl1';
+}
   }
 
   function gameStart() {

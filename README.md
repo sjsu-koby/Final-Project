@@ -45,10 +45,10 @@ Added HTML/CSS web pages for artist statement and resources
 
 Made platform collision
 
+Made the victory screen able to start a new game
+
 **Ongoing:**
 
 Make new platform interactions
-
-Make the victory screen start a new game
 
 Give sprites animation(not that important, but will attempt past due date)
