@@ -20,6 +20,13 @@ html, body {
 
 canvas {
   display: block;
+
+}
+
+h1 {
+  position: fixed;
+  top: 150px;
+  text-align: center;
 }
 
 .artistButton {
@@ -44,5 +51,12 @@ canvas {
 }
 
 .gameButton{
+
+  position: absolute;
+  left: 900px;
+  bottom: 300px;
+  font-family: "Macondo";
+  font-size: 25px;
+
 
 }
