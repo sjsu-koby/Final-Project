@@ -12,7 +12,7 @@ var changeDirection;
 var jumpSound;
 var music;
 var slider;
-
+var platform = [];
 function preload() {
   music = loadSound('assets/beach-time.mp3')
   jumpSound = loadSound('assets/Mario-jump-sound.mp3')
@@ -137,7 +137,7 @@ function titleScreen() {
   fill(100);
   text('Reach the top to win!', width * .5, height * .7)
   text('Controls: "SPACE" to jump. "LEFT/RIGHT ARROWKEYS" to move.', width * .5, height * .75)
-  text('Jump once or you are cheating 😡', width * .5, height * .80)
+  text('Jump once a time or you are cheating 😡', width * .5, height * .80)
 }
 
 function gameStage1() {
@@ -172,6 +172,7 @@ function gameStage1() {
   else if(changeDirection == true){
     platform3.position.x = platform3.position.x - 1}
   pop();
+
   stick.velocity.x = 0;
   if (keyIsDown(LEFT_ARROW)) stick.velocity.x = -5;
   if (keyIsDown(RIGHT_ARROW)) stick.velocity.x = 5;

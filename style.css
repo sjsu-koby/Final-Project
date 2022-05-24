@@ -15,7 +15,6 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: "Macondo";
-  height: 100%;
   font-size: 25px
 }
 
@@ -25,17 +24,25 @@ canvas {
 
 .artistButton {
   position: fixed;
-  left: 430px;
+  left: 410px;
+  font-family: "Macondo";
+  font-size: 25px;
 
 }
 
 .resourceButton {
   position: fixed;
-  right: 450px;
-
+  right: 470px;
+  font-family: "Macondo";
+  font-size: 25px;
 }
 
 .artist {
   margin-left: 0;
+  margin-top: 15%;
   text-align: center;
+}
+
+.gameButton{
+
 }
